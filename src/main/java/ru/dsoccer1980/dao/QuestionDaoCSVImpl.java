@@ -6,32 +6,35 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class QuestionDaoCSVImpl implements QuestionDao {
     private final String questionFilePath = "./questions.csv";
     private final String answerFilePath = "./answers.csv";
 
     @Override
-    public String findQuestionById(int id) {
-        return getValueFromCSVFile(questionFilePath, id);
+    public Map<Integer, String> readAllQuestions() {
+        return getValuesFromCSVFile(questionFilePath);
     }
 
     @Override
-    public String findAnswerById(int id) {
-        return getValueFromCSVFile(answerFilePath, id);
+    public Map<Integer, String> readAllAnswers() {
+        return getValuesFromCSVFile(answerFilePath);
     }
 
-    private String getValueFromCSVFile(String fileName, int id) {
-        String value = "";
+    private Map<Integer, String> getValuesFromCSVFile(String fileName) {
+        Map<Integer, String> questions = new HashMap<>();
         try (Reader reader = Files.newBufferedReader(Paths.get(fileName)); CSVReader csvReader = new CSVReader(reader)) {
             List<String[]> records = csvReader.readAll();
-            String[] strings = records.stream().filter(r -> Integer.valueOf(r[0]) == (id + 1)).findFirst().get();
-            value = strings[1];
-
+            for (String[] record : records) {
+                questions.put(Integer.valueOf(record[0]), record[1]);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return value;
+        return questions;
     }
+
 }

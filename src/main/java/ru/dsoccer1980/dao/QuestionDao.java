@@ -1,7 +1,9 @@
 package ru.dsoccer1980.dao;
 
+import java.util.Map;
+
 public interface QuestionDao {
 
-    String findQuestionById(int id);
-    String findAnswerById(int id);
+    Map<Integer, String> readAllQuestions();
+    Map<Integer, String> readAllAnswers();
 }

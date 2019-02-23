@@ -1,8 +1,10 @@
 package ru.dsoccer1980.service;
 
+import java.util.Map;
+
 public interface QuestionService {
 
-    String findQuestionById(int id);
-    String findAnswerById(int id);
+    Map<Integer, String> readAllQuestions();
+    Map<Integer, String> readAllAnswers();
 
 }

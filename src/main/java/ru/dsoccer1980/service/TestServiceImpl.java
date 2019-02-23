@@ -1,5 +1,7 @@
 package ru.dsoccer1980.service;
 
+import java.util.Map;
+
 public class TestServiceImpl implements TestService {
 
     private final QuestionService questionService;
@@ -15,10 +17,14 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public void showQuestions() {
-        for (int i = 0; i < 5; i++) {
-            ioService.write(questionService.findQuestionById(i));
-            String userAnswer = userAnswerService.readAnswer(i);
-            String rightAnswer = questionService.findAnswerById(i);
+        Map<Integer, String> questions = questionService.readAllQuestions();
+        Map<Integer, String> answers = questionService.readAllAnswers();
+
+        for (Map.Entry<Integer, String> question : questions.entrySet()) {
+            ioService.write(question.getValue());
+            ioService.write("Your answer: ");
+            String userAnswer = userAnswerService.readAnswer(question.getKey());
+            String rightAnswer = answers.get(question.getKey());
             if (userAnswer.equals(rightAnswer)) {
                 this.rightAnswersCount++;
             }
