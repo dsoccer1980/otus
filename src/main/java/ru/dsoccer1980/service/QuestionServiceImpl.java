@@ -19,4 +19,5 @@ public class QuestionServiceImpl implements QuestionService {
     public String findAnswerById(int id) {
         return questionDao.findAnswerById(id);
     }
+
 }
