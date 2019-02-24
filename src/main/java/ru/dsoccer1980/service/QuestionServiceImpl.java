@@ -1,8 +1,9 @@
 package ru.dsoccer1980.service;
 
 import ru.dsoccer1980.dao.QuestionDao;
+import ru.dsoccer1980.model.Question;
 
-import java.util.Map;
+import java.util.List;
 
 public class QuestionServiceImpl implements QuestionService {
 
@@ -13,13 +14,9 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Map<Integer, String> readAllQuestions() {
-        return questionDao.readAllQuestions();
+    public List<Question> getAllQuestions() {
+        return questionDao.getAllQuestions();
     }
 
-    @Override
-    public Map<Integer, String> readAllAnswers() {
-        return questionDao.readAllAnswers();
-    }
 
 }

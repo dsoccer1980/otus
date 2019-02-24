@@ -1,35 +1,25 @@
 package ru.dsoccer1980.dao;
 
 import com.opencsv.CSVReader;
+import ru.dsoccer1980.model.Question;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.HashMap;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class QuestionDaoCSVImpl implements QuestionDao {
-    private final String questionFilePath = "./questions.csv";
-    private final String answerFilePath = "./answers.csv";
+    private final static String FILENAME = "questions.csv";
+
 
     @Override
-    public Map<Integer, String> readAllQuestions() {
-        return getValuesFromCSVFile(questionFilePath);
-    }
-
-    @Override
-    public Map<Integer, String> readAllAnswers() {
-        return getValuesFromCSVFile(answerFilePath);
-    }
-
-    private Map<Integer, String> getValuesFromCSVFile(String fileName) {
-        Map<Integer, String> questions = new HashMap<>();
-        try (Reader reader = Files.newBufferedReader(Paths.get(fileName)); CSVReader csvReader = new CSVReader(reader)) {
+    public List<Question> getAllQuestions() {
+        ClassLoader classLoader = getClass().getClassLoader();
+        List<Question> questions = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(classLoader.getResource(FILENAME).getFile()));
+             CSVReader csvReader = new CSVReader(reader)) {
             List<String[]> records = csvReader.readAll();
             for (String[] record : records) {
-                questions.put(Integer.valueOf(record[0]), record[1]);
+                questions.add(new Question(Integer.valueOf(record[0]), record[1], record[2]));
             }
         } catch (IOException e) {
             e.printStackTrace();

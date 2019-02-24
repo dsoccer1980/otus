@@ -1,7 +1,7 @@
 package ru.dsoccer1980;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.dsoccer1980.service.TestService;
+import ru.dsoccer1980.service.TestingService;
 
 import java.io.*;
 
@@ -15,7 +15,7 @@ public class Main {
         System.out.println("Write your name");
         String name = bufferedReader.readLine();
 
-        TestService testService = context.getBean(TestService.class);
+        TestingService testService = context.getBean(TestingService.class);
         testService.showQuestions();
 
         System.out.println("Result of " + name + ": " + testService.getResult() + " right answers");

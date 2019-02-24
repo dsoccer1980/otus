@@ -1,10 +1,11 @@
 package ru.dsoccer1980.service;
 
-import java.util.Map;
+import ru.dsoccer1980.model.Question;
+
+import java.util.List;
 
 public interface QuestionService {
 
-    Map<Integer, String> readAllQuestions();
-    Map<Integer, String> readAllAnswers();
+    List<Question> getAllQuestions();
 
 }

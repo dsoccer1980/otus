@@ -1,9 +1,10 @@
 package ru.dsoccer1980.dao;
 
-import java.util.Map;
+import ru.dsoccer1980.model.Question;
+
+import java.util.List;
 
 public interface QuestionDao {
 
-    Map<Integer, String> readAllQuestions();
-    Map<Integer, String> readAllAnswers();
+    List<Question> getAllQuestions();
 }

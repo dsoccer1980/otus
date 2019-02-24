@@ -10,15 +10,10 @@
         <constructor-arg name="questionDao" ref="questionDao"/>
     </bean>
 
-    <bean id="userAnswerService" class="ru.dsoccer1980.service.UserAnswerServiceImpl">
-        <constructor-arg name="ioService" ref="ioService"/>
-    </bean>
-
     <bean id="ioService" class="ru.dsoccer1980.service.IOServiceImpl"/>
 
-    <bean id="testService" class="ru.dsoccer1980.service.TestServiceImpl">
+    <bean id="testService" class="ru.dsoccer1980.service.TestingServiceImpl">
         <constructor-arg name="questionService" ref="questionService"/>
-        <constructor-arg name="userAnswerService" ref="userAnswerService"/>
         <constructor-arg name="ioService" ref="ioService"/>
     </bean>
 
