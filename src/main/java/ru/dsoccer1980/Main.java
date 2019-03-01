@@ -1,26 +1,29 @@
 package ru.dsoccer1980;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.dsoccer1980.service.TestingService;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import ru.dsoccer1980.service.RunTesting;
 
 import java.io.*;
 
-
+@ComponentScan
+@PropertySource("classpath:application.properties")
 public class Main {
 
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
+
     public static void main(String[] args) throws IOException {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("/spring-context.xml");
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
 
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Write your name");
-        String name = bufferedReader.readLine();
+        RunTesting runTesting = context.getBean(RunTesting.class);
+        runTesting.run();
 
-        TestingService testService = context.getBean(TestingService.class);
-        testService.showQuestions();
-
-        System.out.println("Result of " + name + ": " + testService.getResult() + " right answers");
-
-        bufferedReader.close();
         context.close();
     }
 }

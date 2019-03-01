@@ -1,15 +1,20 @@
 package ru.dsoccer1980.dao;
 
 import com.opencsv.CSVReader;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Repository;
 import ru.dsoccer1980.model.Question;
+import ru.dsoccer1980.util.exception.NotFoundException;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class QuestionDaoCSVImpl implements QuestionDao {
-    private final static String FILENAME = "questions.csv";
 
+    @Value("${file.name}")
+    private String FILENAME;
 
     @Override
     public List<Question> getAllQuestions() {
@@ -22,7 +27,7 @@ public class QuestionDaoCSVImpl implements QuestionDao {
                 questions.add(new Question(Integer.valueOf(record[0]), record[1], record[2]));
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new NotFoundException(e.getMessage());
         }
         return questions;
     }

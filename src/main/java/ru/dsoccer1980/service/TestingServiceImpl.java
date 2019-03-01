@@ -1,9 +1,11 @@
 package ru.dsoccer1980.service;
 
+import org.springframework.stereotype.Service;
 import ru.dsoccer1980.model.Question;
 
 import java.util.List;
 
+@Service
 public class TestingServiceImpl implements TestingService {
 
     private final QuestionService questionService;
