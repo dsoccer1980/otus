@@ -1,9 +1,13 @@
 package ru.dsoccer1980.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import ru.dsoccer1980.model.Question;
 
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class TestingServiceImpl implements TestingService {
@@ -11,6 +15,15 @@ public class TestingServiceImpl implements TestingService {
     private final QuestionService questionService;
     private final IOService ioService;
     private int rightAnswersCount = 0;
+
+    private MessageSource messageSource;
+    @Value("${locale.prop}")
+    protected String locale;
+
+    @Autowired
+    public void setMessageSource(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     public TestingServiceImpl(QuestionService questionService, IOService ioService) {
         this.questionService = questionService;
@@ -23,7 +36,10 @@ public class TestingServiceImpl implements TestingService {
 
         for (Question question : questions) {
             ioService.write(question.getQuestion());
-            ioService.write("Your answer: ");
+            ioService.write(messageSource.getMessage(
+                    "write.answer",
+                    null,
+                    new Locale(locale)));
             String userAnswer = ioService.read();
             String rightAnswer = question.getAnswer();
             if (userAnswer.equals(rightAnswer)) {
